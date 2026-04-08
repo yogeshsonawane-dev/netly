@@ -48,16 +48,14 @@ The Angular dev server runs on `http://localhost:4200` and proxies `/api` reques
 mvn clean package
 ```
 
-This produces only the backend jar in `target/`. It does not build or embed the Angular application.
+This produces only the backend jar in `target/`. Maven also runs `npm install` and the Angular production build in `ui/`, but it does not embed the Angular output into the jar.
 
 ### Frontend build
 ```bash
-cd ui
-npm install
-npm run build -- --configuration production
+mvn clean package
 ```
 
-This produces the frontend assets in `ui/dist/netly-frontend/browser/`.
+This also produces the frontend assets in `ui/dist/netly-frontend/browser/`.
 
 Production frontend builds call `https://api.netly.upvaly.com/api`.
 
@@ -107,9 +105,7 @@ This guide deploys the backend and frontend separately.
 
 2. **Build the frontend dist:**
    ```bash
-   cd ui
-   npm install
-   npm run build -- --configuration production
+   mvn clean package
    ```
 
 3. **Navigate to the deployment directory:**
