@@ -1,5 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://netly.upvaly.com/api'
+  apiUrl: 'https://api.netly.upvaly.com/api'
 };
-

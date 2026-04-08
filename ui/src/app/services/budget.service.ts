@@ -40,4 +40,3 @@ export class BudgetService {
     return this.http.get<BudgetSummary>(`${this.apiUrl}/summary`);
   }
 }
-

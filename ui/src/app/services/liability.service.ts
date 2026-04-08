@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Liability } from '../models/liability.model';
+import { environment } from '../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LiabilityService {
-  private apiUrl = '/api/liabilities';
+  private apiUrl = `${environment.apiUrl}/liabilities`;
 
   constructor(private http: HttpClient) {}
 
@@ -35,4 +36,3 @@ export class LiabilityService {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }
-

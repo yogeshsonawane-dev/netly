@@ -52,4 +52,3 @@ export class PortfolioSnapshotService {
     return this.http.get<PortfolioHistory>(`${this.apiUrl}/history/liability-type/${encodeURIComponent(liabilityTypeName)}`, { params });
   }
 }
-

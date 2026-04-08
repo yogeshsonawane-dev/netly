@@ -8,7 +8,7 @@ import { environment } from '../../environments/environment.development';
   providedIn: 'root'
 })
 export class UserService {
-  private apiUrl = environment.apiUrl || 'http://localhost:8082/api';
+  private apiUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) {}
 
@@ -50,4 +50,3 @@ export class UserService {
     return this.http.put<UserProfile>(`${this.apiUrl}/user/profile/basic-with-otp`, request);
   }
 }
-
