@@ -128,8 +128,18 @@ This guide deploys the backend and frontend separately.
 6. **Copy configuration files:**
    - Copy your application configuration files (e.g., `application-prod.properties`) to the `/opt/app/netly/config/` directory.
 
-7. **Copy frontend files:**
-   - Copy the contents of `ui/dist/netly-frontend/browser/` to a static web root such as `/var/www/netly/`
+7. **Deploy frontend files:**
+   - Option 1, copy the built files to the Nginx web root:
+   ```bash
+   sudo mkdir -p /var/www/netly
+   sudo cp -R ui/dist/netly-frontend/browser/* /var/www/netly/
+   ```
+   - Option 2, create a symlink from the Nginx web root to the built frontend directory in your repo checkout:
+   ```bash
+   sudo rm -rf /var/www/netly
+   sudo ln -s /absolute/path/to/repo/ui/dist/netly-frontend/browser /var/www/netly
+   ```
+   - With the symlink approach, `index.html` must exist directly under `/var/www/netly`, and the Nginx user must be able to traverse every parent directory of the repo path.
 
 8. **Execute database scripts:**
    - Run the database schema scripts (e.g., `schema.sql`) to set up the database.
@@ -167,6 +177,7 @@ The UI is served from `https://netly.upvaly.com` and the backend API is served f
 ### Notes
 
 - Ensure all file paths and permissions are correctly set.
+- If you use a symlink for `/var/www/netly`, confirm the target path exists after every frontend build and that the repo path is readable by Nginx.
 - Update configuration files with production-specific settings (database URLs, secrets, etc.).
 - Monitor logs in `/opt/app/netly/logs/` for any issues.
 
@@ -175,6 +186,7 @@ The UI is served from `https://netly.upvaly.com` and the backend API is served f
   - Ensure PostgreSQL is running and the database exists.
 - **Frontend not loading:**
   - Rebuild the frontend: `cd ui && npm run build -- --configuration production`
+  - If you are using a symlinked `/var/www/netly`, verify it still points to a valid `ui/dist/netly-frontend/browser` directory.
 - **Build fails at npm install:**
   - Clean the frontend dependencies and rerun `npm install`.
 - **Do I need Node.js?** Yes, the frontend is built separately with npm.
