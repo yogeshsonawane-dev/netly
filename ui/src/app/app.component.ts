@@ -44,5 +44,9 @@ export class AppComponent {
   closeUserMenu(): void {
     this.userMenuOpen = false;
   }
+
+  refreshUI(): void {
+    window.location.reload();
+  }
 }
 
