@@ -1,0 +1,15 @@
+$kind: http-request
+url: "{{baseUrl}}/api/configuration/custom-asset-types"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "typeName": "PRIVATE_EQUITY",
+      "displayName": "Private Equity",
+      "description": "Unlisted equity investments",
+      "isActive": true
+    }
+order: 2000

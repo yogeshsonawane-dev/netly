@@ -1,0 +1,6 @@
+$kind: http-request
+url: "{{baseUrl}}/api/portfolio-snapshots/history?weeks={{weeks}}"
+method: GET
+queryParams:
+  weeks: "{{weeks}}"
+order: 4000

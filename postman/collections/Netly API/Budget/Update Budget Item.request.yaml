@@ -1,0 +1,17 @@
+$kind: http-request
+url: "{{baseUrl}}/api/budget/{{budgetItemId}}"
+method: PUT
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "itemType": "EXPENSE",
+      "itemName": "Rent Updated",
+      "amount": 26000,
+      "isInvestment": false,
+      "description": "Updated rent amount",
+      "displayOrder": 1
+    }
+order: 5000

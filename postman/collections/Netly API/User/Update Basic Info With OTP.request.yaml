@@ -1,0 +1,14 @@
+$kind: http-request
+url: "{{baseUrl}}/api/user/profile/basic-with-otp"
+method: PUT
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "name": "Updated Test User",
+      "email": "new.primary@example.com",
+      "otp": "123456"
+    }
+order: 6000

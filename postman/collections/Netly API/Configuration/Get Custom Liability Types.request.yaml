@@ -1,0 +1,4 @@
+$kind: http-request
+url: "{{baseUrl}}/api/configuration/custom-liability-types"
+method: GET
+order: 4000

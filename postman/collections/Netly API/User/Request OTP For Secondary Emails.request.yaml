@@ -1,0 +1,14 @@
+$kind: http-request
+url: "{{baseUrl}}/api/user/profile/request-otp-for-secondary-emails"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "secondaryEmails": [
+        "secondary3@example.com"
+      ]
+    }
+order: 5000

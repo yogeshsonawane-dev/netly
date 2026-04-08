@@ -1,0 +1,15 @@
+$kind: http-request
+url: "{{baseUrl}}/api/user/profile/secondary-emails"
+method: PUT
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "secondaryEmails": [
+        "secondary1@example.com",
+        "secondary2@example.com"
+      ]
+    }
+order: 2000

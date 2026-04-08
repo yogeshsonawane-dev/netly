@@ -1,0 +1,26 @@
+$kind: http-request
+description: Creates a user account and stores the returned JWT in the
+  collection variable `bearerToken`.
+url: "{{baseUrl}}/api/auth/signup"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "name": "Test User",
+      "email": "test.user@example.com",
+      "password": "Password123"
+    }
+scripts:
+  - type: afterResponse
+    code: |-
+      if (pm.response.code === 201) {
+        var data = pm.response.json();
+        if (data.token) {
+          pm.collectionVariables.set('bearerToken', data.token);
+        }
+      }
+    language: text/javascript
+order: 1000

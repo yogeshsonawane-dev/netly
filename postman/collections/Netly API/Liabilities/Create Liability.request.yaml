@@ -1,0 +1,24 @@
+$kind: http-request
+url: "{{baseUrl}}/api/liabilities"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "name": "Home Loan",
+      "customLiabilityTypeId": null,
+      "liabilityTypeName": "HOME_LOAN",
+      "liabilityTypeDisplayName": "Home Loan",
+      "currentBalance": 2500000,
+      "originalAmount": 3000000,
+      "startDate": "2024-01-01",
+      "endDate": "2044-01-01",
+      "interestRate": 8.5,
+      "monthlyPayment": 25000,
+      "lender": "ABC Bank",
+      "description": "Primary residence loan",
+      "currency": "INR"
+    }
+order: 3000

@@ -1,0 +1,12 @@
+$kind: http-request
+url: "{{baseUrl}}/api/user/profile/request-otp-for-primary-email"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "newEmail": "new.primary@example.com"
+    }
+order: 4000

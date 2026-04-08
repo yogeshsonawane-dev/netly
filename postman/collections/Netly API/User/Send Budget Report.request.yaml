@@ -1,0 +1,4 @@
+$kind: http-request
+url: "{{baseUrl}}/api/user/profile/send-budget-report"
+method: POST
+order: 9000

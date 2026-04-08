@@ -1,0 +1,4 @@
+$kind: http-request
+url: "{{baseUrl}}/api/portfolio-snapshots"
+method: POST
+order: 1000

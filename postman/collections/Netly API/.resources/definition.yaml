@@ -1,0 +1,21 @@
+$kind: collection
+description: Postman collection for all Netly API endpoints.
+variables:
+  baseUrl: http://localhost:8082
+  bearerToken: ""
+  assetId: "1"
+  liabilityId: "1"
+  budgetItemId: "1"
+  customAssetTypeId: "1"
+  customLiabilityTypeId: "1"
+  weeks: "12"
+  startDate: 2026-01-01
+  endDate: 2026-04-08
+  assetTypeName: EQUITY
+  liabilityTypeName: HOME_LOAN
+auth:
+  - id: 9b47c965-0e16-496b-a03e-c8a1e09a29a1
+    type: bearer
+    name: bearer auth
+    credentials:
+      token: "{{bearerToken}}"

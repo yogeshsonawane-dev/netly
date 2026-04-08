@@ -1,0 +1,7 @@
+$kind: http-request
+url: "{{baseUrl}}/api/portfolio-snapshots/history/liability-type/{{liabilityTyp\
+  eName}}?weeks={{weeks}}"
+method: GET
+queryParams:
+  weeks: "{{weeks}}"
+order: 8000

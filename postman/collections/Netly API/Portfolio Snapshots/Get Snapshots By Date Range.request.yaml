@@ -1,0 +1,8 @@
+$kind: http-request
+url: "{{baseUrl}}/api/portfolio-snapshots/range?startDate={{startDate}}&endDate\
+  ={{endDate}}"
+method: GET
+queryParams:
+  startDate: "{{startDate}}"
+  endDate: "{{endDate}}"
+order: 3000

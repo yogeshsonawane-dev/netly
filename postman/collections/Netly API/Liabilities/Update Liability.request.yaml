@@ -1,0 +1,24 @@
+$kind: http-request
+url: "{{baseUrl}}/api/liabilities/{{liabilityId}}"
+method: PUT
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "name": "Home Loan Updated",
+      "customLiabilityTypeId": null,
+      "liabilityTypeName": "HOME_LOAN",
+      "liabilityTypeDisplayName": "Home Loan",
+      "currentBalance": 2450000,
+      "originalAmount": 3000000,
+      "startDate": "2024-01-01",
+      "endDate": "2044-01-01",
+      "interestRate": 8.5,
+      "monthlyPayment": 25000,
+      "lender": "ABC Bank",
+      "description": "Updated loan details",
+      "currency": "INR"
+    }
+order: 4000

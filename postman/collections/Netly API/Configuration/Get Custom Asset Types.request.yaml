@@ -1,0 +1,4 @@
+$kind: http-request
+url: "{{baseUrl}}/api/configuration/custom-asset-types"
+method: GET
+order: 1000

@@ -1,0 +1,4 @@
+$kind: http-request
+url: "{{baseUrl}}/api/budget/type/EXPENSE"
+method: GET
+order: 2000

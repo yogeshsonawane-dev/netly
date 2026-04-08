@@ -1,0 +1,15 @@
+$kind: http-request
+url: "{{baseUrl}}/api/configuration/custom-liability-types"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "typeName": "FAMILY_LOAN",
+      "displayName": "Family Loan",
+      "description": "Borrowings from family or friends",
+      "isActive": true
+    }
+order: 5000

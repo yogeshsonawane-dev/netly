@@ -1,0 +1,1154 @@
+{
+  "info": {
+    "_postman_id": "4f9d8e1d-6af0-4d87-85d9-bae1e7a4976c",
+    "name": "Netly API",
+    "description": "Postman collection for all Netly API endpoints.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.netly.upvaly.com"
+    },
+    {
+      "key": "bearerToken",
+      "value": ""
+    },
+    {
+      "key": "assetId",
+      "value": "1"
+    },
+    {
+      "key": "liabilityId",
+      "value": "1"
+    },
+    {
+      "key": "budgetItemId",
+      "value": "1"
+    },
+    {
+      "key": "customAssetTypeId",
+      "value": "1"
+    },
+    {
+      "key": "customLiabilityTypeId",
+      "value": "1"
+    },
+    {
+      "key": "weeks",
+      "value": "12"
+    },
+    {
+      "key": "startDate",
+      "value": "2026-01-01"
+    },
+    {
+      "key": "endDate",
+      "value": "2026-04-08"
+    },
+    {
+      "key": "assetTypeName",
+      "value": "EQUITY"
+    },
+    {
+      "key": "liabilityTypeName",
+      "value": "HOME_LOAN"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "auth": {
+        "type": "noauth"
+      },
+      "item": [
+        {
+          "name": "Signup",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "  var data = pm.response.json();",
+                  "  if (data.token) {",
+                  "    pm.collectionVariables.set('bearerToken', data.token);",
+                  "  }",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Test User\",\n  \"email\": \"test.user@example.com\",\n  \"password\": \"Password123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/signup",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "signup"
+              ]
+            },
+            "description": "Creates a user account and stores the returned JWT in the collection variable `bearerToken`."
+          }
+        },
+        {
+          "name": "Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "  var data = pm.response.json();",
+                  "  if (data.token) {",
+                  "    pm.collectionVariables.set('bearerToken', data.token);",
+                  "  }",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"test.user@example.com\",\n  \"password\": \"Password123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
+            },
+            "description": "Logs in with email/password and stores the JWT in `bearerToken`."
+          }
+        },
+        {
+          "name": "Request OTP",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"test.user@example.com\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/request-otp",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "request-otp"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Verify OTP",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "  var data = pm.response.json();",
+                  "  if (data.token) {",
+                  "    pm.collectionVariables.set('bearerToken', data.token);",
+                  "  }",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"test.user@example.com\",\n  \"otp\": \"123456\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/verify-otp",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "verify-otp"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Assets",
+      "item": [
+        {
+          "name": "Get All Assets",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/assets",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "assets"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Asset By Id",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/assets/{{assetId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "assets",
+                "{{assetId}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Asset",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Apple Shares\",\n  \"customAssetTypeId\": null,\n  \"assetTypeName\": \"EQUITY\",\n  \"assetTypeDisplayName\": \"Equity\",\n  \"currentValue\": 125000,\n  \"purchasePrice\": 100000,\n  \"purchaseDate\": \"2025-01-10\",\n  \"quantity\": 10,\n  \"description\": \"Long term stock holding\",\n  \"location\": \"US Broker\",\n  \"currency\": \"USD\",\n  \"illiquid\": false\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/assets",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "assets"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Asset",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Apple Shares Updated\",\n  \"customAssetTypeId\": null,\n  \"assetTypeName\": \"EQUITY\",\n  \"assetTypeDisplayName\": \"Equity\",\n  \"currentValue\": 130000,\n  \"purchasePrice\": 100000,\n  \"purchaseDate\": \"2025-01-10\",\n  \"quantity\": 10,\n  \"description\": \"Updated stock holding\",\n  \"location\": \"US Broker\",\n  \"currency\": \"USD\",\n  \"illiquid\": false\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/assets/{{assetId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "assets",
+                "{{assetId}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete Asset",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/api/assets/{{assetId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "assets",
+                "{{assetId}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Portfolio Summary",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/assets/summary",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "assets",
+                "summary"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Liabilities",
+      "item": [
+        {
+          "name": "Get All Liabilities",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/liabilities",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "liabilities"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Liability By Id",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/liabilities/{{liabilityId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "liabilities",
+                "{{liabilityId}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Liability",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Home Loan\",\n  \"customLiabilityTypeId\": null,\n  \"liabilityTypeName\": \"HOME_LOAN\",\n  \"liabilityTypeDisplayName\": \"Home Loan\",\n  \"currentBalance\": 2500000,\n  \"originalAmount\": 3000000,\n  \"startDate\": \"2024-01-01\",\n  \"endDate\": \"2044-01-01\",\n  \"interestRate\": 8.5,\n  \"monthlyPayment\": 25000,\n  \"lender\": \"ABC Bank\",\n  \"description\": \"Primary residence loan\",\n  \"currency\": \"INR\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/liabilities",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "liabilities"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Liability",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Home Loan Updated\",\n  \"customLiabilityTypeId\": null,\n  \"liabilityTypeName\": \"HOME_LOAN\",\n  \"liabilityTypeDisplayName\": \"Home Loan\",\n  \"currentBalance\": 2450000,\n  \"originalAmount\": 3000000,\n  \"startDate\": \"2024-01-01\",\n  \"endDate\": \"2044-01-01\",\n  \"interestRate\": 8.5,\n  \"monthlyPayment\": 25000,\n  \"lender\": \"ABC Bank\",\n  \"description\": \"Updated loan details\",\n  \"currency\": \"INR\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/liabilities/{{liabilityId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "liabilities",
+                "{{liabilityId}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete Liability",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/api/liabilities/{{liabilityId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "liabilities",
+                "{{liabilityId}}"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Budget",
+      "item": [
+        {
+          "name": "Get All Budget Items",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/budget",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "budget"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Budget Items By Type",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/budget/type/EXPENSE",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "budget",
+                "type",
+                "EXPENSE"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Budget Item By Id",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/budget/{{budgetItemId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "budget",
+                "{{budgetItemId}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Budget Item",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"itemType\": \"EXPENSE\",\n  \"itemName\": \"Rent\",\n  \"amount\": 25000,\n  \"isInvestment\": false,\n  \"description\": \"Monthly house rent\",\n  \"displayOrder\": 1\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/budget",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "budget"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Budget Item",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"itemType\": \"EXPENSE\",\n  \"itemName\": \"Rent Updated\",\n  \"amount\": 26000,\n  \"isInvestment\": false,\n  \"description\": \"Updated rent amount\",\n  \"displayOrder\": 1\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/budget/{{budgetItemId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "budget",
+                "{{budgetItemId}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete Budget Item",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/api/budget/{{budgetItemId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "budget",
+                "{{budgetItemId}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Budget Summary",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/budget/summary",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "budget",
+                "summary"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Configuration",
+      "item": [
+        {
+          "name": "Get Custom Asset Types",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/configuration/custom-asset-types",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "configuration",
+                "custom-asset-types"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Custom Asset Type",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"typeName\": \"PRIVATE_EQUITY\",\n  \"displayName\": \"Private Equity\",\n  \"description\": \"Unlisted equity investments\",\n  \"isActive\": true\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/configuration/custom-asset-types",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "configuration",
+                "custom-asset-types"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete Custom Asset Type",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/api/configuration/custom-asset-types/{{customAssetTypeId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "configuration",
+                "custom-asset-types",
+                "{{customAssetTypeId}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Custom Liability Types",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/configuration/custom-liability-types",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "configuration",
+                "custom-liability-types"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Custom Liability Type",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"typeName\": \"FAMILY_LOAN\",\n  \"displayName\": \"Family Loan\",\n  \"description\": \"Borrowings from family or friends\",\n  \"isActive\": true\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/configuration/custom-liability-types",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "configuration",
+                "custom-liability-types"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete Custom Liability Type",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/api/configuration/custom-liability-types/{{customLiabilityTypeId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "configuration",
+                "custom-liability-types",
+                "{{customLiabilityTypeId}}"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Portfolio Snapshots",
+      "item": [
+        {
+          "name": "Create Snapshot",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/api/portfolio-snapshots",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "portfolio-snapshots"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get All Snapshots",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/portfolio-snapshots",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "portfolio-snapshots"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Snapshots By Date Range",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/portfolio-snapshots/range?startDate={{startDate}}&endDate={{endDate}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "portfolio-snapshots",
+                "range"
+              ],
+              "query": [
+                {
+                  "key": "startDate",
+                  "value": "{{startDate}}"
+                },
+                {
+                  "key": "endDate",
+                  "value": "{{endDate}}"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Portfolio History",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/portfolio-snapshots/history?weeks={{weeks}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "portfolio-snapshots",
+                "history"
+              ],
+              "query": [
+                {
+                  "key": "weeks",
+                  "value": "{{weeks}}"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Asset History",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/portfolio-snapshots/history/asset/{{assetId}}?weeks={{weeks}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "portfolio-snapshots",
+                "history",
+                "asset",
+                "{{assetId}}"
+              ],
+              "query": [
+                {
+                  "key": "weeks",
+                  "value": "{{weeks}}"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Asset Type History",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/portfolio-snapshots/history/asset-type/{{assetTypeName}}?weeks={{weeks}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "portfolio-snapshots",
+                "history",
+                "asset-type",
+                "{{assetTypeName}}"
+              ],
+              "query": [
+                {
+                  "key": "weeks",
+                  "value": "{{weeks}}"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Liability History",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/portfolio-snapshots/history/liability/{{liabilityId}}?weeks={{weeks}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "portfolio-snapshots",
+                "history",
+                "liability",
+                "{{liabilityId}}"
+              ],
+              "query": [
+                {
+                  "key": "weeks",
+                  "value": "{{weeks}}"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Liability Type History",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/portfolio-snapshots/history/liability-type/{{liabilityTypeName}}?weeks={{weeks}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "portfolio-snapshots",
+                "history",
+                "liability-type",
+                "{{liabilityTypeName}}"
+              ],
+              "query": [
+                {
+                  "key": "weeks",
+                  "value": "{{weeks}}"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "User",
+      "item": [
+        {
+          "name": "Get User Profile",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/user/profile",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "user",
+                "profile"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Secondary Emails",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"secondaryEmails\": [\n    \"secondary1@example.com\",\n    \"secondary2@example.com\"\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/user/profile/secondary-emails",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "user",
+                "profile",
+                "secondary-emails"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Basic Info",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Updated Test User\",\n  \"email\": \"updated.user@example.com\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/user/profile/basic",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "user",
+                "profile",
+                "basic"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Request OTP For Primary Email Change",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"newEmail\": \"new.primary@example.com\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/user/profile/request-otp-for-primary-email",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "user",
+                "profile",
+                "request-otp-for-primary-email"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Request OTP For Secondary Emails",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"secondaryEmails\": [\n    \"secondary3@example.com\"\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/user/profile/request-otp-for-secondary-emails",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "user",
+                "profile",
+                "request-otp-for-secondary-emails"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Basic Info With OTP",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Updated Test User\",\n  \"email\": \"new.primary@example.com\",\n  \"otp\": \"123456\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/user/profile/basic-with-otp",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "user",
+                "profile",
+                "basic-with-otp"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Secondary Emails With OTP",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"secondaryEmails\": [\n    \"secondary3@example.com\"\n  ],\n  \"otp\": \"123456\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/user/profile/secondary-emails-with-otp",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "user",
+                "profile",
+                "secondary-emails-with-otp"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Send Portfolio Report",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/api/user/profile/send-portfolio-report",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "user",
+                "profile",
+                "send-portfolio-report"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Send Budget Report",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/api/user/profile/send-budget-report",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "user",
+                "profile",
+                "send-budget-report"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

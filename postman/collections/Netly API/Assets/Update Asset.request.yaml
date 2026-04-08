@@ -1,0 +1,23 @@
+$kind: http-request
+url: "{{baseUrl}}/api/assets/{{assetId}}"
+method: PUT
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "name": "Apple Shares Updated",
+      "customAssetTypeId": null,
+      "assetTypeName": "EQUITY",
+      "assetTypeDisplayName": "Equity",
+      "currentValue": 130000,
+      "purchasePrice": 100000,
+      "purchaseDate": "2025-01-10",
+      "quantity": 10,
+      "description": "Updated stock holding",
+      "location": "US Broker",
+      "currency": "USD",
+      "illiquid": false
+    }
+order: 4000

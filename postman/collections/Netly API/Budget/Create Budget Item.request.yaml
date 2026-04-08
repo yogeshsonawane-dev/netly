@@ -1,0 +1,17 @@
+$kind: http-request
+url: "{{baseUrl}}/api/budget"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "itemType": "EXPENSE",
+      "itemName": "Rent",
+      "amount": 25000,
+      "isInvestment": false,
+      "description": "Monthly house rent",
+      "displayOrder": 1
+    }
+order: 4000
